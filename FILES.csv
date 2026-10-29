@@ -1,6 +1,6 @@
 ﻿path,purpose,bytes,sha256
 .gitignore,Documentation and installation helper,118,7540c65fe73e24f7b4666c7b1f515f9360dc58c6fa4ef269f8e75e847460fa8d
-README.md,Documentation and installation helper,12754,b8f25b944c1a674fc323ef9e662627dd4447be308c14f63f56f33796dbf378cd
+README.md,Documentation and installation helper,12508,bf31a625210e394e2af58d036585c793b291611466174c3f36c4d5a6d71b4394
 apps/floating-home/FloatingHome-1.4.apk,Floating Home APK,16727,b26a802f25a22d937b194bf40df734c9c654163e54a01867676f2865abb098b4
 apps/floating-home/source/AndroidManifest.xml,Floating Home source and tests,1293,420479c95a9d32775950eba991615aacc1f4df85b99b8e787d00aed638d98fdc
 apps/floating-home/source/README.md,Floating Home source and tests,2133,39ca29475b398aeeccae576c6c6a15559619160952763c17f36ed9dce3f43b66

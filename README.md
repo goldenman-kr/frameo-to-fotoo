@@ -35,8 +35,6 @@ Google 시스템 통합 후 정상 재부팅을 확인했습니다. Floating Hom
 
 ## 2. 다른 PC에 저장소 준비
 
-현재 저장소는 비공개입니다. 접근 권한이 있는 GitHub 계정으로 먼저 인증한 뒤 복제합니다. GitHub CLI를 사용한다면 `gh auth login` 후 `gh repo clone goldenman-kr/frameo-to-fotoo`로 받을 수 있습니다.
-
 ```bash
 git clone https://github.com/goldenman-kr/frameo-to-fotoo.git
 cd frameo-to-fotoo
