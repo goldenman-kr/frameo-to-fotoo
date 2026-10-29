@@ -1,7 +1,7 @@
 ﻿path,purpose,bytes,sha256
 .gitattributes,Cross-platform checkout attributes,233,b85db2d196e0024100f116f6701be48ef7caf4a01793307c5bb1b91ca3169fb8
 .gitignore,Documentation and installation helper,118,7540c65fe73e24f7b4666c7b1f515f9360dc58c6fa4ef269f8e75e847460fa8d
-README.md,Documentation and installation helper,16168,67bd7a7a47219a9ac113a502e492dc4efa5fa3df2d631d7a0bbd8ac1b94ba685
+README.md,Documentation and installation helper,26150,a1d8ca82a76ae73a56d36008046529c6b501891f00cec3b82a83e2c22c765779
 apps/floating-home/FloatingHome-1.4.apk,Floating Home APK,16727,b26a802f25a22d937b194bf40df734c9c654163e54a01867676f2865abb098b4
 apps/floating-home/source/AndroidManifest.xml,Floating Home source and tests,1293,420479c95a9d32775950eba991615aacc1f4df85b99b8e787d00aed638d98fdc
 apps/floating-home/source/README.md,Floating Home source and tests,2133,39ca29475b398aeeccae576c6c6a15559619160952763c17f36ed9dce3f43b66
@@ -17,7 +17,7 @@ apps/fotoo-2.6.5-armv7/config.en.apk,Fotoo ARMv7 split APK,57753,b6420e29ad49b6a
 apps/fotoo-2.6.5-armv7/config.ko.apk,Fotoo ARMv7 split APK,29081,4b253a8b9fc2a509d36efe512a06ec86812ad694988348f928c8947c67f8b8c9
 apps/fotoo-2.6.5-armv7/config.xxhdpi.apk,Fotoo ARMv7 split APK,271889,0b0ee2d01365e00bb193d0899c997ea688dc03a65bd234c6d48e504296d95520
 apps/nova/Nova-6.2.19.apk,Nova Launcher,10975531,95bb6ddca520a3639268ca1d7d6e1357b9a5c0841cf7e858cb6ac9084f5eceb2
-docs/installation-detail.txt,Installation reference,14502,40532e179ea834e619ab6401906f57bb8533d80a3b0f8b7dd1bef7620b2f6864
+docs/installation-detail.txt,Installation reference,14678,9e1d2173b191217296b4353941ecf5f238b99cc3ff9138448b17cdb49773a2ac
 docs/verified-configuration.json,Installation reference,696,4c23baf56faeaaf8a137f64b20297309e816100c16fde1d8d6ed0c5a99eb60ce
 google/apply-system-google.sh,Google system integration,18561,e00cf076e445aac5a97580050ed1c00477619d05a793b32be03680d5951ea594
 google/system-stage-manifest.json,Google system integration,7243,a40d0cd870583d9ddb2f3c97a844ffb58f3d6f0875619ea2adb2d7a8c256fb3e
@@ -54,6 +54,8 @@ google/system-stage/PrebuiltGmsCore/lib/arm/libtensorflowlite_jni.so,Google syst
 google/system-stage/PrebuiltGmsCore/lib/arm/libvcdiffjni.so,Google system integration,230516,a234468e5e70b32b1eb213d536c2371f9d6359080abfd3cdfc03918cfbb8c004
 google/system-stage/PrebuiltGmsCore/lib/arm/libwearable-selector.so,Google system integration,26672,f8a826aff7d1202de11b2c449abb9b4825d3c329e50fba156140ebf6ee31bebc
 install-apps.command,Documentation and installation helper,1377,4d11cd67cfd0f0f5ef5c8ead07c0da474857f6dc60f3c10f06c741b04e430374
+scripts/dp103-system-snapshot.sh,Manual backup: frozen system image helper,1326,efe412c6201c31cb15b1e236ce2b11f24ea377b1e57f2df2b11f72619a475531
+tests/test_snapshot_control_flow.py,Mock-only snapshot control-flow checks,2650,b8e3d6e1d7996225e1ec0e0c3f4d269a84cb35729171bf1d3135df8e1a1cf7a3
 tools/macos/NOTICE.txt,macOS ADB tools and notices,1086869,9be9b3c08eef0c7fa423829c0607ee6d301e827a0aae6d1ea98602d562315085
 tools/macos/adb,macOS ADB tools and notices,14046464,9e78ca23f20ce357d156704d0eb706f90056d15310524881a1aec532be3acec3
 tools/macos/source.properties,macOS ADB tools and notices,38,a2abc4b12c27a0661ff872eb090c23bdc8d3cace2809359d21f30ff247153dfa

@@ -174,13 +174,201 @@ bash install-apps.command
 
 ## 6. Google 추가 전 자체 백업·복구 경로 확보
 
-Fotoo의 사진 소스 설정과 **Google Play 구매 계정으로 프리미엄을 복원하는 것**은 별개입니다. 이 단말에서 구매 계정을 사용하기 위해 Google 구성 4종을 시스템 앱으로 추가했습니다.
+이후 Google 통합은 `/system`을 변경하므로 **이 단말 자체의 백업과 복구 경로를 먼저 확보합니다.** 아래는 기존 `su`가 가능한 DP103에서 시스템·부팅 관련 이미지 **9개**를 수동으로 백업하는 방법입니다. 새로 루팅하거나 펌웨어를 쓰는 절차는 아닙니다.
 
-이후 단계는 `/system`을 변경하므로 **단말 자체의 검증된 백업과 복구 경로를 먼저 확보해야 합니다.** 기존 `su`와 충분한 시스템 여유 공간도 필요합니다. APK와 ARM 라이브러리의 합계는 약 173MiB입니다.
+백업은 **실행 시점의 상태**입니다. 이미 Google을 추가한 뒤 실행하면 Google 추가 전 상태나 공장 순정 이미지가 되지 않습니다. 전체 eMMC 백업이 아니며 `userdata`, 사진·계정, `cache`, `metadata`, `kpanic`, `misc`는 포함하지 않습니다. 기존 단말 전용 백업 이미지는 저장소에 올리지 않았습니다.
 
-원래 단말에서는 시스템·부팅 관련 이미지 9개를 크기와 해시로 검증하여 별도 보관했습니다. **그 단말 전용 백업 이미지는 이 저장소에 포함하지 않았습니다.** 전체 eMMC나 사진·계정 백업도 아닙니다. 다른 단말의 이미지를 대신 사용하지 않습니다.
+### 6-1. 전제 조건과 PC 준비
 
-원래 단말에서 Loader 진입·읽기·Android 복귀는 확인했지만, 물리 버튼만으로 부팅 불능 상태에서 Loader에 진입하거나 이미지를 실제로 복원하는 쓰기 작업은 검증하지 않았습니다. 백업만으로 복구가 보장되지는 않습니다.
+전원과 USB를 안정적으로 유지하고, 앱 설치·업데이트·시스템 변경을 멈춥니다. `ADB`와 `SERIAL`은 2~3단계에서 지정한 값을 사용합니다. 액자의 `/data`와 PC에 각각 **최소 2GiB의 여유 공간**을 확보합니다. 이미 같은 이름의 임시 폴더나 백업 파일이 있다면 덮어쓰지 말고 먼저 기존 사본을 별도 보관합니다.
+
+백업용 [시스템 스냅샷 스크립트](scripts/dp103-system-snapshot.sh)를 PC에서 액자로 전송합니다. **이 명령은 전송만 하며 실행하지 않습니다.**
+
+macOS·Linux·Windows Git Bash:
+
+```bash
+mkdir -p backups/dp103-before-google
+"$ADB" -s "$SERIAL" push scripts/dp103-system-snapshot.sh /data/local/tmp/dp103-system-snapshot.sh
+"$ADB" -s "$SERIAL" shell
+```
+
+Windows PowerShell:
+
+```powershell
+New-Item -ItemType Directory -Force backups/dp103-before-google | Out-Null
+& $ADB -s $SERIAL push scripts/dp103-system-snapshot.sh /data/local/tmp/dp103-system-snapshot.sh
+& $ADB -s $SERIAL shell
+```
+
+### 6-2. Android 루트 셸에서 파티션 확인
+
+이제부터 6-4단계까지의 `sh` 코드는 **PC 셸이 아니라 방금 연 Android 셸에 입력**합니다. PC OS와 관계없이 같습니다.
+
+```sh
+su
+id
+getprop ro.product.model
+getprop ro.build.version.release
+df /data
+ls -l /dev/block/platform/1021c000.rksdmmc/by-name
+cat /proc/mounts | grep ' /system '
+cat /sys/class/block/mmcblk0p11/start
+cat /sys/class/block/mmcblk0p11/size
+```
+
+`id`가 `uid=0`이어야 합니다. 모델·OS가 `DP103 / 6.0.1`이고, **`system`이 `mmcblk0p11`로 연결되며 실제 `/system` 마운트 장치와 일치하는지** 확인합니다. 확인했던 `system` 시작 sector는 `630784`, 크기는 `2097152` sector입니다. sector는 512바이트입니다. 다른 값이면 아래 고정 경로를 사용하지 않습니다.
+
+이 단말에서 확인한 이미지 크기는 다음과 같습니다. 다른 단말에 이 주소·크기를 그대로 적용하지 않습니다.
+
+| 이미지 | 읽을 대상 | Linux 시작 sector | 파일 크기(bytes) |
+| --- | --- | ---: | ---: |
+| `reserved-prefix.img` | `mmcblk0` 앞 8MiB | 0 | 8388608 |
+| `uboot.img` | by-name/uboot | 16384 | 4194304 |
+| `resource.img` | by-name/resource | 32768 | 16777216 |
+| `kernel.img` | by-name/kernel | 65536 | 12582912 |
+| `boot.img` | by-name/boot | 90112 | 16777216 |
+| `recovery.img` | by-name/recovery | 122880 | 37748736 |
+| `backup.img` | by-name/backup | 196608 | 67108864 |
+| `radical_update.img` | by-name/radical_update | 2727936 | 67108864 |
+| `system.img` | `mmcblk0p11` | 630784 | 1073741824 |
+
+### 6-3. 부팅 관련 이미지 8개와 파티션 정보 저장
+
+**Android 루트 셸에서** 아래 블록을 실행합니다. 입력은 블록 장치, 출력은 `/data/local/tmp`의 일반 파일입니다. `if=`와 `of=`를 바꾸지 않습니다. 새 임시 폴더 생성이 실패하거나 마지막에 `BOOT_IMAGES_READY`가 나오지 않으면 중단합니다.
+
+```sh
+(
+    set -e
+    BASE=/dev/block/platform/1021c000.rksdmmc/by-name
+    OUT=/data/local/tmp/dp103-backup-before-google
+    mkdir "$OUT"
+    chmod 755 "$OUT"
+    cat /proc/partitions > "$OUT/proc-partitions.txt"
+    ls -l "$BASE" > "$OUT/by-name.txt"
+    for block in /sys/class/block/mmcblk0p*; do
+        echo "${block##*/} start=$(cat "$block/start") sectors=$(cat "$block/size")"
+    done > "$OUT/partition-layout.txt"
+
+    dd if=/dev/block/mmcblk0 of="$OUT/reserved-prefix.img" bs=512 count=16384
+    [ "$(wc -c < "$OUT/reserved-prefix.img")" -eq 8388608 ]
+    source_hash=$(dd if=/dev/block/mmcblk0 bs=512 count=16384 2>/dev/null | md5sum)
+    copy_hash=$(md5sum "$OUT/reserved-prefix.img")
+    [ "${source_hash%% *}" = "${copy_hash%% *}" ]
+
+    for name in uboot resource kernel boot recovery backup radical_update; do
+        cat "$BASE/$name" > "$OUT/$name.img"
+        source_hash=$(md5sum "$BASE/$name")
+        copy_hash=$(md5sum "$OUT/$name.img")
+        [ "${source_hash%% *}" = "${copy_hash%% *}" ]
+    done
+    echo BOOT_IMAGES_READY
+)
+```
+
+이 단계의 파일은 각 원본과 MD5를 비교합니다. 백업 중 펌웨어 업데이트나 다른 시스템 작업을 하지 않습니다. `/system`은 실행 중 변경될 수 있으므로 위 반복문에 넣지 않고 다음 단계에서 별도로 읽습니다.
+
+### 6-4. 일관된 system 이미지 생성과 해시 목록 저장
+
+**Android 루트 셸에서** 실행합니다.
+
+```sh
+sh /data/local/tmp/dp103-system-snapshot.sh
+```
+
+스크립트는 `/system`을 `toybox fsfreeze -f`로 잠시 동결하고, `/dev/block/mmcblk0p11`을 임시 폴더의 `system.img`로 복사한 뒤 `fsfreeze -u`로 해제합니다. `/data`는 동결하지 않습니다. 파일시스템 동결은 [새 쓰기를 잠시 대기시켜 일관된 이미지를 읽기 위한 동작](https://github.com/util-linux/util-linux/blob/master/sys-utils/fsfreeze.8.adoc)이며, 그동안 일부 앱이 잠시 멈출 수 있습니다.
+
+원래 단말에서는 약 29초에 스냅샷을 확보했습니다. 제공 스크립트에는 종료 시 해제와 90초 감시 해제가 있습니다. **`SNAPSHOT_READY`와 이미지 MD5가 출력되어야 성공**입니다. `SNAPSHOT_TIMEOUT`이나 오류가 있으면 그 이미지를 유효한 백업으로 사용하지 않습니다. 제공 파일은 기존에 검증한 방법에 모델·크기·덮어쓰기 방지 검사를 추가한 것으로, 추가 검사 버전 자체를 실제 단말에서 재실행하지는 않았습니다. 정상 완료·복사 실패·시간 초과·다른 모델·기존 이미지 보호는 모의 검사로 확인했습니다. macOS·Linux에서 Python 3가 있으면 `python3 tests/test_snapshot_control_flow.py`로 이 모의 검사만 실행할 수 있으며, 실제 기기에는 접근하지 않습니다.
+
+동결 이후 비정상 종료되어 앱이 멈춘 상태라면, 다른 PC 터미널에서 ADB 루트 셸로 들어가 아래 **해제만** 시도할 수 있습니다. 전원 차단이나 재부팅을 먼저 시도하지 않습니다.
+
+```sh
+# 별도로 연 Android 루트 셸에서만 실행
+/system/bin/toybox fsfreeze -u /system
+```
+
+정상 완료 후 기존 Android 루트 셸에서 파일 목록과 전송용 해시를 만듭니다.
+
+```sh
+(
+    set -e
+    cd /data/local/tmp/dp103-backup-before-google
+    [ -s system.img ]
+    md5sum reserved-prefix.img uboot.img resource.img kernel.img boot.img recovery.img backup.img radical_update.img system.img > MD5SUMS.txt
+    chmod 644 ./*.img ./*.txt
+    echo BACKUP_FILES_READY
+)
+exit
+exit
+```
+
+마지막 `exit` 두 번은 각각 `su`와 ADB 셸을 종료하여 PC 터미널로 돌아오는 것입니다. `BACKUP_FILES_READY`가 없으면 PC 전송 단계로 넘어가지 않습니다. `system.img`는 동결 중 만든 사본을 검증 기준으로 사용하며, 계속 실행 중인 원본 파티션을 나중에 다시 읽은 해시와 비교하지 않습니다.
+
+### 6-5. PC로 가져오고 9개 크기·해시 확인
+
+셸의 `>`로 이미지 바이너리를 PC에 리다이렉션하지 않고, [ADB의 `pull`](https://developer.android.com/tools/adb#copyfiles)로 파일을 가져옵니다. 이 방식은 Windows PowerShell을 포함해 동일한 바이너리 파일을 전송합니다.
+
+macOS·Linux·Windows Git Bash:
+
+```bash
+"$ADB" -s "$SERIAL" pull /data/local/tmp/dp103-backup-before-google/. backups/dp103-before-google/
+ls -l backups/dp103-before-google/*.img
+```
+
+Windows PowerShell:
+
+```powershell
+& $ADB -s $SERIAL pull /data/local/tmp/dp103-backup-before-google/. backups/dp103-before-google/
+Get-ChildItem backups/dp103-before-google/*.img | Select-Object Name, Length
+```
+
+**이미지 파일이 정확히 9개이고 모든 크기가 6-2 표와 일치하는지 확인합니다.** 이어서 액자에서 생성한 MD5 목록과 PC 사본을 비교합니다.
+
+macOS:
+
+```bash
+(
+    set -e
+    cd backups/dp103-before-google
+    [ "$(wc -l < MD5SUMS.txt)" -eq 9 ]
+    set -- ./*.img
+    [ "$#" -eq 9 ]
+    while read -r expected name; do
+        actual=$(md5 -q "$name")
+        [ "$actual" = "$expected" ] || { echo "HASH_MISMATCH: $name"; exit 1; }
+    done < MD5SUMS.txt
+    shasum -a 256 ./*.img > SHA256SUMS.txt
+    echo ALL_9_IMAGE_HASHES_VERIFIED
+)
+```
+
+Linux — Git Bash에 `md5sum`이 있는 경우에도 같은 명령 사용:
+
+```bash
+(cd backups/dp103-before-google && [ "$(wc -l < MD5SUMS.txt)" -eq 9 ] && md5sum -c MD5SUMS.txt && sha256sum ./*.img > SHA256SUMS.txt)
+```
+
+Windows PowerShell:
+
+```powershell
+$Backup = 'backups/dp103-before-google'
+if (@(Get-ChildItem "$Backup/*.img").Count -ne 9) { throw 'EXPECTED_9_IMAGES' }
+if (@(Get-Content "$Backup/MD5SUMS.txt").Count -ne 9) { throw 'EXPECTED_9_HASHES' }
+Get-Content "$Backup/MD5SUMS.txt" | ForEach-Object {
+    $expected, $name = $_ -split '\s+', 2
+    $actual = (Get-FileHash -LiteralPath (Join-Path $Backup $name) -Algorithm MD5).Hash
+    if ($actual -ine $expected) { throw "HASH_MISMATCH: $name" }
+}
+Get-ChildItem "$Backup/*.img" | Get-FileHash -Algorithm SHA256 |
+    Export-Csv "$Backup/SHA256SUMS.csv" -NoTypeInformation -Encoding UTF8
+```
+
+크기와 **MD5 9개가 모두 일치해야** 백업을 완료로 판단합니다. SHA-256은 PC 보관 사본의 이후 무결성 검사용입니다. 이미지와 `MD5SUMS.txt`, SHA-256 목록, `partition-layout.txt`, `by-name.txt`, `proc-partitions.txt`를 함께 외장 디스크 등 다른 위치에도 보관합니다. `backups/`와 `*.img`는 Git에서 제외되어 있습니다. 백업 이미지는 GitHub에 업로드하지 않습니다.
+
+### 복구 경로 확인 범위
+
+백업이 있어도 실제 복구 경로가 확보된 것과 같지는 않습니다. 원래 단말에서 Rockchip Loader(USB `2207:310d`) 진입·읽기·정상 Android 복귀는 확인했지만, 물리 버튼만으로 부팅 불능 상태에서 진입하는 방법과 이미지 복원 쓰기는 검증하지 않았습니다. 이 단말의 Loader LBA는 Linux 물리 sector에서 8192를 뺀 값이며, **다른 단말의 복원 주소로 사용하지 않습니다.**
+
+이 문서의 백업 절차는 재부팅·모드 전환·복원 쓰기를 실행하지 않습니다. Loader 시험과 실제 복원은 별도로 계획해야 합니다. 실행 중인 마운트된 `/system` 위에 `system.img`를 덮어쓰지 않습니다.
 
 ## 7. Google 시스템 구성 추가
 
@@ -252,6 +440,7 @@ apps/floating-home/       Floating Home 1.4 APK 및 소스
 google/                  Google 시스템 APK·ARM 라이브러리·적용 스크립트
 tools/macos/             macOS ADB, 도구 고지와 버전
 docs/                    상세 절차와 확인된 구성 정보
+scripts/                 수동 백업용 시스템 스냅샷 도우미
 install-apps.command      일반 앱 설치 도우미
 FILES.csv                 파일별 용도·크기·SHA-256
 SHA256SUMS.txt            파일 무결성 검증
