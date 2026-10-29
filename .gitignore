@@ -1,0 +1,13 @@
+.DS_Store
+*.idsig
+*.p12
+*.jks
+*.keystore
+.env
+.env.*
+work/
+backups/
+DP103-pre-google-backup/
+*.img
+*.log
+__pycache__/

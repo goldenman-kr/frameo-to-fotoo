@@ -1,0 +1,194 @@
+[
+  {
+    "path": "GoogleLoginService/GoogleLoginService.apk",
+    "bytes": 8300280,
+    "sha256": "0062759c40142c9aa4212b714a76a51f8815cd37a4f8ac2b9c9fde2d29c100e1",
+    "sha1": "3b283da8de3107280cd4c61bfb8d1be205d2dee7"
+  },
+  {
+    "path": "Phonesky/Phonesky.apk",
+    "bytes": 63452136,
+    "sha256": "f1606d37ac1d15334141ca76b8c500385fde8685e7a4c9ea662bff2527faaac2",
+    "sha1": "d7dca864d569a374f84af54eb71f7a56c6fdcf38"
+  },
+  {
+    "path": "Phonesky/lib/arm/libphonesky_data_loader.so",
+    "bytes": 39536,
+    "sha256": "2c74d557420801c19b9e209f3f9c5ed586e8614d3f20497e61874f53b6aa4417",
+    "sha1": "6a900e25f51c4d154835d01b1db20b1c7c2ffd33"
+  },
+  {
+    "path": "Phonesky/lib/arm/libmappedcountercacheversionjni.so",
+    "bytes": 5856,
+    "sha256": "4d403f02870f19a1ae5a24ede59f4846e7dcf6c56556b5b269fc22da1f966821",
+    "sha1": "43ba85682ffdf23bbe4a5badb2094f69a0854c84"
+  },
+  {
+    "path": "Phonesky/lib/arm/libempty_armeabi-v7a.so",
+    "bytes": 5112,
+    "sha256": "aa0231a9956fe2c883766e662f25158fe8f69edaaefb6d5d4d4d8df33b01c859",
+    "sha1": "d7e76bd981fdc1af598019b174a76d9cfd8df58c"
+  },
+  {
+    "path": "Phonesky/lib/arm/libcronet.98.0.4758.34.so",
+    "bytes": 3272892,
+    "sha256": "aa78cf489029765f92d97e236c6a4121bb14ab7201473e92677f771555256a60",
+    "sha1": "a24752e613ad8c8ab7a284b02e213a5c61b06c56"
+  },
+  {
+    "path": "Phonesky/lib/arm/libgame_sdk_device_info_jni.so",
+    "bytes": 64500,
+    "sha256": "0b0f10603fe068d7e828176d635a05578f24271136fe6fe59d39d4e7081018bc",
+    "sha1": "5281aeabe7ae387d672ab835dfd1776f97d98d6d"
+  },
+  {
+    "path": "Phonesky/lib/arm/libconscrypt_jni.so",
+    "bytes": 760928,
+    "sha256": "ee7f69d4d69f0dc5ff70087534d3ddb1d5c72f7d9e4107e732a545927132e400",
+    "sha1": "bd12db4bf2754e25b91504fc5c101daeda212823"
+  },
+  {
+    "path": "Phonesky/lib/arm/libnnapi_device_enumeration_minimal.so",
+    "bytes": 52008,
+    "sha256": "2e58a6b2920fa3870411daf0d6db21b675c4ec3b33ce49f45044a5142d55842a",
+    "sha1": "9b1abd049c5ff182f2d422bedaff80dca5cd18fe"
+  },
+  {
+    "path": "Phonesky/lib/arm/libbrotli.so",
+    "bytes": 55888,
+    "sha256": "d8d21926afe4b00e85bf86838ab11bdbb0ff538b1cfe9052ec79bf36ba2c6e2c",
+    "sha1": "a49530971250cfcd31ab90ef200d8a96f36a6550"
+  },
+  {
+    "path": "Phonesky/lib/arm/libtensorflowlite_jni.so",
+    "bytes": 338292,
+    "sha256": "6f325d880418c28988eaf3eb85c83a4c24368850048d216bc8bc4fed215c3b34",
+    "sha1": "fe471fcd102b1574a6bddc9f43952171515296d4"
+  },
+  {
+    "path": "GoogleServicesFramework/GoogleServicesFramework.apk",
+    "bytes": 3976028,
+    "sha256": "fef3bea19ee5eecb467fa746471fed5f11e13a070ccc51f20cb2416de2bb8cfc",
+    "sha1": "7978fba72554f4d451673b3d1c369aca1f273fbc"
+  },
+  {
+    "path": "PrebuiltGmsCore/PrebuiltGmsCore.apk",
+    "bytes": 92136315,
+    "sha256": "020122ca5d2e9dc04faad42cfcc243e4cee7b597875185aebe682c20c7235aac",
+    "sha1": "3795207eff12da1c32b03d33c1e0259eacca2f7b"
+  },
+  {
+    "path": "PrebuiltGmsCore/lib/arm/libvcdiffjni.so",
+    "bytes": 230516,
+    "sha256": "a234468e5e70b32b1eb213d536c2371f9d6359080abfd3cdfc03918cfbb8c004",
+    "sha1": "f6dfee9ed5d648671c840cbfdba27a396732ae5c"
+  },
+  {
+    "path": "PrebuiltGmsCore/lib/arm/libgmscore.so",
+    "bytes": 5588,
+    "sha256": "8142cb6e30a2c398b9bbf31c45aaf6737ac4da9e9de29fc9661c7c66034f12bb",
+    "sha1": "a9558885260cce3e4bf1a938663b4c2cad06503f"
+  },
+  {
+    "path": "PrebuiltGmsCore/lib/arm/libconscrypt_gmscore_jni.so",
+    "bytes": 764696,
+    "sha256": "e8d1bbba0f4116c96b5c77572e68ceb7158d21f3da5b6f465c06a86891933606",
+    "sha1": "8761b0e8ea9a6176ad15e17482905d39f98e7651"
+  },
+  {
+    "path": "PrebuiltGmsCore/lib/arm/libgcastv2_support.so",
+    "bytes": 214628,
+    "sha256": "d5ae1b3b60427cfc0927cf40c99d3da9e280a10d9f29f273093b3f8f6c406358",
+    "sha1": "e774be8cd8678ffd7423cc13c47e2523bab38239"
+  },
+  {
+    "path": "PrebuiltGmsCore/lib/arm/libbrotli_native.so",
+    "bytes": 690464,
+    "sha256": "a8a378d05984088107a7feb318aeda307f419ec3fd2cedec2b408edd74a9f33f",
+    "sha1": "72340d880e2f0f66ec05e65dbd6bea19ff3a074d"
+  },
+  {
+    "path": "PrebuiltGmsCore/lib/arm/libsemanticlocation_inference_jni.so",
+    "bytes": 536228,
+    "sha256": "322221e1118a7edf382eed541dddad8a6c88e6daf010d8055326b8deb7535b86",
+    "sha1": "1d5ca1a4619a6b29ffe382e9b58697d8543cb53a"
+  },
+  {
+    "path": "PrebuiltGmsCore/lib/arm/libgoogle-ocrclient-v3.so",
+    "bytes": 281824,
+    "sha256": "b2573fb0ce95554ca381a88168167f392498e2849d71b8424f31f2c78bf40a86",
+    "sha1": "548eb8f242715969fcf939141ff020e29a6114fb"
+  },
+  {
+    "path": "PrebuiltGmsCore/lib/arm/libjgcastservice.so",
+    "bytes": 38568,
+    "sha256": "c7f422dc7c3275fdfbb6e9adf207ec1e86e1fc7e3536e07f774f5963a330d93b",
+    "sha1": "211228d3713ab75e1caf7b4ccf932b1edcaf2874"
+  },
+  {
+    "path": "PrebuiltGmsCore/lib/arm/libleveldbjni.so",
+    "bytes": 289412,
+    "sha256": "8006fb6da0a96d7293b958b2dbe8b50cda0695b20f1bb8ff8489dddf3264efa2",
+    "sha1": "c5bbc15d0ab216ad75881b3ebc26663712815f03"
+  },
+  {
+    "path": "PrebuiltGmsCore/lib/arm/libwearable-selector.so",
+    "bytes": 26672,
+    "sha256": "f8a826aff7d1202de11b2c449abb9b4825d3c329e50fba156140ebf6ee31bebc",
+    "sha1": "a665a80a3f4b242215fdd05b4324fbdb7e259a4c"
+  },
+  {
+    "path": "PrebuiltGmsCore/lib/arm/libsslwrapper_jni.so",
+    "bytes": 5564,
+    "sha256": "fe71de85bf85acc861531c7b6dd706bdf37d530ad22c5d866efa415a82c4ed61",
+    "sha1": "4961697f89186d7e20373a47fb0c2ff4fa7bc1cb"
+  },
+  {
+    "path": "PrebuiltGmsCore/lib/arm/libWhisper.so",
+    "bytes": 357680,
+    "sha256": "bd355178d314734fe02b1d9983055fbb898783dfbf36d2660ea43c798be7ec1c",
+    "sha1": "a0bad6f3f0efc1c91b1dd2f5e86065bdc389daa1"
+  },
+  {
+    "path": "PrebuiltGmsCore/lib/arm/libtensorflowlite_jni.so",
+    "bytes": 280244,
+    "sha256": "ee9b420538a2616ceaa46d3f266c7f04b40f2fdf464474e81885a44bd4ab61cc",
+    "sha1": "4001779c48d46a7a96ce5127555d8b8bf14a856f"
+  },
+  {
+    "path": "PrebuiltGmsCore/lib/arm/libinertial-anchor-jni.so",
+    "bytes": 576668,
+    "sha256": "f390511e7b39eb02c877ca1bbacfca80744a42a5aa002455923f7cab6e254931",
+    "sha1": "87043f94d2e23b55606aad6a02a4ee9c39d1ed73"
+  },
+  {
+    "path": "PrebuiltGmsCore/lib/arm/libjingle_peerconnection_so.so",
+    "bytes": 2853052,
+    "sha256": "5b14b3f092a8ec8c832566ceacc1c74411d8842c5c10a9bdde4cbfcd84d02af6",
+    "sha1": "a824d2cb5e2a23d9adf0c52640a330905f76142e"
+  },
+  {
+    "path": "PrebuiltGmsCore/lib/arm/libgcastv2_base.so",
+    "bytes": 321048,
+    "sha256": "0bf019c3308b16a847e2dfda5d12c51af6e46be8b8c971f8baac52f1b44e711e",
+    "sha1": "e69c458909349d03d46a8dc1cc89606ce044de8f"
+  },
+  {
+    "path": "PrebuiltGmsCore/lib/arm/libAppDataSearch.so",
+    "bytes": 1197388,
+    "sha256": "2662eeca10028e4f14f0c8a0e532da3fe439d509f6f522d3bb5a1ca97d15a53b",
+    "sha1": "f40c6dd15816618f494b2b3c6e9d13574324e3f1"
+  },
+  {
+    "path": "PrebuiltGmsCore/lib/arm/libgeller_jni_lite_lib.so",
+    "bytes": 469404,
+    "sha256": "328406bc1d5d99bac95ce41371459560aa5e41102a7906e78517131273fc0707",
+    "sha1": "ea54cd50a47a63d04a7cf3b081f6e080234243f0"
+  },
+  {
+    "path": "PrebuiltGmsCore/lib/arm/libmatching.so",
+    "bytes": 72416,
+    "sha256": "7b1496b483892ba72c0081865172efdcf42b9adc1fb990bdfd9bf3832021c40c",
+    "sha1": "923accf7dbb04b803df2ed2646ea0bc3086b486c"
+  }
+]

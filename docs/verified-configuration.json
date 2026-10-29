@@ -1,0 +1,17 @@
+{
+  "device": "DP103",
+  "android": "6.0.1",
+  "api": 23,
+  "abi": "armeabi-v7a",
+  "Fotoo": "2.6.5 (16005), base + armv7 + en + ko + xxhdpi",
+  "Nova Launcher": "6.2.19 (62019)",
+  "Floating Home": "1.4 (5)",
+  "Google Services Framework": "6.0.1 (23)",
+  "Google Account Manager": "6.0.1 (23)",
+  "Google Play services": "21.48.57 (040300-424705839)",
+  "Google Play Store": "29.2.15-21 [0] [PR] 426536134",
+  "google_login": "User confirmed 2026-10-29 Asia/Seoul",
+  "fotoo_premium_restore": "User confirmed 2026-10-29 Asia/Seoul",
+  "real_reboot_after_floating_home_1_4": "Not tested",
+  "frameo": "net.frameo.frame remains installed and enabled; Nova is the selected replacement launcher"
+}
