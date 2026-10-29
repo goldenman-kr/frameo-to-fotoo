@@ -1,0 +1,7 @@
+# Keep Android shell scripts and checksum-covered text identical on all hosts.
+* text=auto eol=lf
+*.apk binary
+*.so binary
+tools/macos/adb binary
+# Preserve the existing CSV byte format used by the checksum manifest.
+FILES.csv -text

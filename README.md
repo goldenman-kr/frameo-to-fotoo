@@ -42,16 +42,73 @@ cd frameo-to-fotoo
 
 APK와 라이브러리는 저장소에 일반 파일로 들어 있습니다. Git LFS나 별도 Release는 필요하지 않습니다.
 
-macOS에서는 포함된 ADB를 사용합니다.
+### ADB가 없는 경우
+
+ADB는 [공식 Android SDK Platform-Tools 다운로드 페이지](https://developer.android.com/tools/releases/platform-tools)에서 해당 OS의 ZIP을 받아 압축 해제하면 사용할 수 있습니다. Android Studio 전체를 설치할 필요는 없습니다. `platform-tools` 폴더 전체를 유지하세요. Windows에서는 `adb.exe`와 함께 제공되는 DLL도 필요합니다. 아래처럼 실행 파일 경로를 지정하면 PATH 등록은 생략할 수 있습니다.
+
+Git이 없다면 저장소의 **Code → Download ZIP**으로 받아 압축을 풀고, 터미널의 현재 위치를 저장소 폴더로 옮겨도 됩니다.
+
+### OS와 셸 선택
+
+아래 본문의 `bash` 코드 블록은 **macOS 터미널·Linux Bash·Windows Git Bash** 기준입니다. 변수 설정과 이후 명령은 같은 터미널에서 실행합니다.
+
+| PC 환경 | 준비 및 차이 |
+| --- | --- |
+| macOS | 저장소에 포함된 `tools/macos/adb`를 바로 사용하거나 공식 macOS Platform-Tools를 사용합니다. |
+| Linux | 공식 Linux Platform-Tools를 받습니다. USB 접근 권한 오류가 나면 배포판의 Android/udev 설정을 확인합니다. |
+| Windows + Git Bash | 공식 Windows Platform-Tools를 받습니다. 아래 경로 예시와 `MSYS_NO_PATHCONV` 설정 후 본문의 Bash 명령과 설치 도우미를 사용할 수 있습니다. |
+| Windows + PowerShell | 공식 Windows Platform-Tools를 받습니다. 아래 PowerShell 예시와 명령 변환 표를 사용합니다. `.command` 도우미는 직접 실행하지 않고 ADB 설치 명령을 수행합니다. |
+
+Windows에서 USB 장치가 ADB로 잡히지 않으면 장치 관리자의 드라이버 상태를 확인합니다. 필요한 경우 기기에 맞는 제조사 ADB 드라이버를 사용합니다. [Google USB Driver는 Google 기기용](https://developer.android.com/studio/run/win-usb)이므로 이 Rockchip 액자와 호환된다고 가정하지 않습니다. macOS·Linux에는 Windows USB 드라이버를 설치하지 않습니다.
+
+macOS:
 
 ```bash
 export ADB="$PWD/tools/macos/adb"
 "$ADB" version
 ```
 
-Linux·Windows에서는 해당 OS의 Android SDK Platform-Tools를 준비하고 `ADB`를 그 실행 파일 경로로 지정하세요. 제공된 `.command` 도우미는 Bash용입니다. Windows에서는 Git Bash를 사용하거나 아래 ADB 명령을 해당 셸에 맞춰 직접 실행합니다.
+Linux — 압축을 푼 실제 경로로 변경:
 
-파일을 확인하려면 macOS에서 `shasum -a 256 -c SHA256SUMS.txt`, Linux에서 `sha256sum -c SHA256SUMS.txt`를 실행합니다.
+```bash
+export ADB="$HOME/Android/platform-tools/adb"
+"$ADB" version
+```
+
+Windows Git Bash — 예시는 `C:\Android\platform-tools`에 압축을 푼 경우:
+
+```bash
+export ADB='/c/Android/platform-tools/adb.exe'
+export MSYS_NO_PATHCONV=1
+"$ADB" version
+```
+
+`MSYS_NO_PATHCONV=1`은 Git Bash가 액자 내부의 `/data/local/tmp/...` 같은 경로를 Windows 경로로 자동 변환하는 것을 방지합니다.
+
+Windows PowerShell — 같은 위치에 압축을 푼 경우:
+
+```powershell
+$ADB = 'C:\Android\platform-tools\adb.exe'
+& $ADB version
+& $ADB devices -l
+$SERIAL = 'YOUR_DEVICE_SERIAL' # 목록에서 확인한 실제 serial
+& $ADB -s $SERIAL get-state
+```
+
+PowerShell에서 본문의 Bash 명령을 옮길 때는 다음 차이를 적용합니다.
+
+| Bash 표기 | PowerShell 표기 |
+| --- | --- |
+| `export SERIAL=YOUR_DEVICE_SERIAL` | `$SERIAL = 'YOUR_DEVICE_SERIAL'` |
+| `"$ADB" -s "$SERIAL" ...` | `& $ADB -s $SERIAL ...` |
+| 여러 줄 명령의 줄 끝 `\` | `\`를 제거하고 한 줄로 합쳐 실행 |
+| `bash install-apps.command` | 4~5단계 ADB 설치 명령을 직접 실행하거나 Git Bash 이용 |
+
+예를 들어 PowerShell에서는 `& $ADB -s $SERIAL install -r apps/nova/Nova-6.2.19.apk`처럼 실행합니다. Fotoo의 `install-multiple`도 5개 APK 경로를 한 명령에 모두 넣습니다. PC의 OS가 바뀌어도 액자에 설치하는 APK와 Google 파일은 같습니다. `google/apply-system-google.sh`는 **PC가 아니라 액자의 Android 셸에서** 실행합니다.
+
+저장소의 `.gitattributes`는 Windows에서 복제해도 Android 셸 스크립트의 LF 줄바꿈과 파일 해시가 유지되도록 설정합니다. Google 스크립트를 편집한다면 LF 형식으로 저장하세요.
+
+파일 무결성은 macOS에서 `shasum -a 256 -c SHA256SUMS.txt`, Linux에서 `sha256sum -c SHA256SUMS.txt`로 확인합니다. Windows PowerShell에서는 `Get-FileHash 파일경로 -Algorithm SHA256` 결과를 `FILES.csv` 또는 `SHA256SUMS.txt`와 비교할 수 있습니다.
 
 ## 3. 전원·USB 연결과 대상 확인
 
