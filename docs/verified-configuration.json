@@ -12,6 +12,16 @@
   "Google Play Store": "29.2.15-21 [0] [PR] 426536134",
   "google_login": "User confirmed 2026-10-29 Asia/Seoul",
   "fotoo_premium_restore": "User confirmed 2026-10-29 Asia/Seoul",
-  "real_reboot_after_floating_home_1_4": "Not tested",
-  "frameo": "net.frameo.frame remains installed and enabled; Nova is the selected replacement launcher"
+  "real_reboot_after_floating_home_1_4": "Verified 2026-10-30 Asia/Seoul after persistent app lifecycle policy change; Floating Home and Fotoo started from actual BOOT_COMPLETED",
+  "frameo": "net.frameo.frame remains installed and enabled; Nova is the selected replacement launcher",
+  "app_lifecycle_policy": {
+    "property": "sys.cts_gts.status=true",
+    "persistent_location": "/system/build.prop",
+    "verified": "2026-10-30 Asia/Seoul, one reboot",
+    "nova_default_home_persisted": true,
+    "fotoo_schedule_alarms_restored": true,
+    "manual_alarm_on_screen_wake_verified": true,
+    "scheduled_deep_suspend_rtc_wake_verified": false,
+    "scope": "Tested DP103 firmware only; global app/cache/error policy effects"
+  }
 }
